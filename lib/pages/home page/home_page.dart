@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'landing_page.dart';
+import '../landing_page.dart';
 import 'circular_chart.dart'; // Assuming CircularChart is your pie chart widget
 
 class HomePage extends StatelessWidget {
@@ -54,10 +54,9 @@ class HomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 40), // Space between the row and the pie chart
-
             // Title for the Pie Chart
             const Text(
-              'Your Pie Chart',
+              'Overall Comments analysis',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
