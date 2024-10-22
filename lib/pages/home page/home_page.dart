@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../landing_page.dart';
 import 'circular_chart.dart'; // Assuming CircularChart is your pie chart widget
+import 'input_writed_review.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -53,6 +54,28 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
+              const SizedBox(height: 40), // Space between the row and the pie chart
+            Row(
+              children: [
+                const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+            // Title for the Pie Chart
+            const Text(
+              'Overall Comments analysis',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 50), // Adds some space between the text and the pie chart
+
+            // Add the pie chart below
+            const SizedBox(
+              width: 300, // Width of the pie chart container
+              height: 300, // Height of the pie chart container
+              child: CircularChart(), //Input the CircularChart class to get the pie chart
+            ),
             const SizedBox(height: 40), // Space between the row and the pie chart
             // Title for the Pie Chart
             const Text(
@@ -62,17 +85,20 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20), // Adds some space between the text and the pie chart
+                ],
+                ),
+            const SizedBox(height: 20),
 
-            // Add the pie chart below
-            const SizedBox(
-              width: 300, // Width of the pie chart container
-              height: 300, // Height of the pie chart container
-              child: CircularChart(), // Assuming CircularChart is your pie chart widget
+            SizedBox(
+              width: 300,
+              height: 500,
+              child: ReviewAnalysisPage(),
             ),
-          ],
+            ],
         ),
-      ),
+      ],
+    ),
+    ),
     );
   }
 }
