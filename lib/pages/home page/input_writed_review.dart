@@ -11,18 +11,35 @@ class ReviewAnalysisPage extends StatefulWidget {
 class ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
   final TextEditingController _controller = TextEditingController();
   String _analysisResult = '';
+  bool _isLoading = false;
 
   void _submitReview() async {
-    String review = _controller.text; //get the review from the text field
+    String review = _controller.text;
 
     setState(() {
+      _isLoading = true;
       _analysisResult = 'Submitting review...';
     });
-    String analysisResult = await submitReview(review);
 
-    setState(() {
-      _analysisResult = analysisResult;
-    });
+    try {
+      final response = await submitReview(review);
+
+      // Format the results as a string
+      final categoriesText = response.categories.map((category) =>
+      '${category.category}: ${(category.confidence * 100).toStringAsFixed(1)}%'
+      ).join('\n');
+
+      setState(() {
+        _analysisResult = 'Analysis Results:\n\n$categoriesText\n\n'
+            'Processed ${response.processedSentences} sentences';
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _analysisResult = 'Error: $e';
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -42,14 +59,20 @@ class ReviewAnalysisPageState extends State<ReviewAnalysisPage> {
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: _submitReview,
-              child: const Text('Submit Review'),
+              onPressed: _isLoading ? null : _submitReview,
+              child: _isLoading
+                  ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+                  : const Text('Submit Review'),
             ),
             const SizedBox(height: 16.0),
-            // Display the analysis result
             Text(
               _analysisResult,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

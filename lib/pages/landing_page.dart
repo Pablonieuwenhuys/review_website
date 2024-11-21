@@ -23,7 +23,7 @@ class LandingPage extends StatelessWidget {
                       // Navigate to SignUp page on button press
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const SignUp()),
+                        MaterialPageRoute(builder: (context) => SignUp()),
                       );
                     },
                     child: Container(
